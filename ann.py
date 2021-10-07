@@ -132,6 +132,27 @@ class NeuralNetwork:
         # Create matrix D from Δ matrix, there is some regularization here
 
         # Use D for gradient descent's update rule, no update for weights from bias units to match PDF results
+
+        m = y.shape[1]
+        delta = []
+        layers = len(self.activations)-1
+        Delta = create_structure_for_ann(self)    
+        D = Delta;
+        #delta_i = self.activations[layers] - y
+        #delta.append(delta_i)
+
+        for i in range(m):
+            delta_i = self.activations[layers] - y[0][i]
+            delta.append(delta_i)
+            for l in range(layers-1, -1, 1):
+                delta_i = self.theta[l].T @ delta_i * self.activations[l] * (1-self.activations[l]);
+                delta.append(delta_i);
+                Delta[l] = Delta[l] + self.activations[l].T @ delta[l+1];
+                D[l]= 1/m * Delta[l]
+        
+        self.theta [1:][:] = D
+        
+
         pass
 
     def predict(self, X):
