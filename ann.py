@@ -145,8 +145,7 @@ class NeuralNetwork:
         delta_i = self.activations[layers] - y
         delta.append(delta_i)
 
-        for i in range(m):
-            for l in range(layers-1, -1, -1):
+        for l in range(layers-1, -1, -1):
 
                 delta_i = self.theta[l].T @ delta[-1] * self.activations[l] * (1-self.activations[l]);
                 delta.append(delta_i[1:][:]);
