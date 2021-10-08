@@ -138,23 +138,24 @@ class NeuralNetwork:
         layers = len(self.activations)-1
         Delta = create_structure_for_ann(self)  
         Delta =[[[0 for k in j] for j in i] for i in Delta]
+
         D= Delta
         aux =self.theta
-        delta_i = np.array([],dtype=np.longlong)
-        
+
         delta_i = self.activations[layers] - y
         delta.append(delta_i)
 
-        for l in range(layers-1, -1, -1):
+        for i in range(m):
+            for l in range(layers-1, -1, -1):
 
-            delta_i = self.theta[l].T @ delta[-1] * self.activations[l] * (1-self.activations[l]);
-            delta.append(delta_i[1:][:]);
+                delta_i = self.theta[l].T @ delta[-1] * self.activations[l] * (1-self.activations[l]);
+                delta.append(delta_i[1:][:]);
 
-            Delta[l] = Delta[l] + delta[-2] @ self.activations[l].T;
+                Delta[l] = Delta[l] + delta[-2] @ self.activations[l].T;
  
-            D[l]= 1/m * Delta[l]
+                D[l]= 1/m * Delta[l]
 
-            aux [l][:, 1:] =aux [l][:, 1:] - self.learning_rate* D[l][:, 1:]   
+                aux [l][:, 1:] =aux [l][:, 1:] - self.learning_rate* D[l][:, 1:]   
                  
         self.theta = aux
 
