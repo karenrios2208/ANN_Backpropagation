@@ -147,14 +147,14 @@ class NeuralNetwork:
 
         for l in range(layers-1, -1, -1):
 
-                delta_i = self.theta[l].T @ delta[-1] * self.activations[l] * (1-self.activations[l]);
-                delta.append(delta_i[1:][:]);
+            delta_i = self.theta[l].T @ delta[-1] * self.activations[l] * (1-self.activations[l]);
+            delta.append(delta_i[1:][:]);
 
-                Delta[l] = Delta[l] + delta[-2] @ self.activations[l].T;
+            Delta[l] = Delta[l] + delta[-2] @ self.activations[l].T;
  
-                D[l]= 1/m * Delta[l]
+            D[l]= 1/m * Delta[l]
 
-                aux [l][:, 1:] =aux [l][:, 1:] - self.learning_rate* D[l][:, 1:]   
+            aux [l][:, 1:] =aux [l][:, 1:] - self.learning_rate* D[l][:, 1:]   
                  
         self.theta = aux
 
