@@ -189,7 +189,23 @@ class NeuralNetwork:
         # - the predictions (y_pred in previous assignments) are in the activations of last layer, you can access them via self.activations
         # - you can get the value of m (number of examples) from the y parameter
         # - do not forget: We do not regularize the bias units weights
-        return 0
+        m = y.shape[1]
+        k= self.output_neurons-1
+ 
+        reg=0
+        layers = len(self.theta)
+
+
+        for i in range(0,layers):
+
+            reg+=np.sum(self.theta[i][:,1:]**2)
+        
+
+      
+        cost = -1/m * np.sum(y* np.log(self.activations[-1]) + (1-y)* np.log(1-self.activations[-1])) + self.regularization_rate/(2*m) * reg 
+   
+    
+        return cost
 
     def fit(self, X, y, initialTheta=None):
         """
